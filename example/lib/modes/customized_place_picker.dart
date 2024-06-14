@@ -51,45 +51,48 @@ class _CustomizedPlacePickerState extends State<CustomizedPlacePicker> {
     );
   }
 
+  // Widget _buildLocationDetails() {
+  //   return ElevatedBottomBar(
+  //     elevation: 8.0,
+  //     child: Column(
+  //       children: [
+  //         StreamBuilder<GeocodingResult?>(
+  //           stream: _controller.currentLocationStream,
+  //           builder: (context, snapshot) {
+  //             return ListTile(
+  //               leading: const Icon(Icons.maps_home_work_rounded),
+  //               title: !snapshot.hasData
+  //                   ? const LinearProgressIndicator()
+  //                   : Text(
+  //                       '${snapshot.data?.formattedAddress.toString()}',
+  //                     ),
+  //             );
+  //           },
+  //         ),
+  //         Hoxy.h8(),
+  //         OutlinedButton.icon(
+  //           style: OutlinedButton.styleFrom(
+  //             minimumSize: const Size(double.maxFinite, 56),
+  //             backgroundColor: Theme.of(context).primaryColor,
+  //           ),
+  //           onPressed: () => Navigator.of(context).pop(
+  //             _controller.currentLocation,
+  //           ),
+  //           icon: const Icon(
+  //             Icons.check_rounded,
+  //             color: Colors.white,
+  //           ),
+  //           label: const Text(
+  //             'Choose address',
+  //             style: TextStyle(color: Colors.white, fontSize: 16.0),
+  //           ),
+  //         ).padHorizontal(24.0),
+  //       ],
+  //     ),
+  //   );
+  // }
   Widget _buildLocationDetails() {
-    return ElevatedBottomBar(
-      elevation: 8.0,
-      child: Column(
-        children: [
-          StreamBuilder<GeocodingResult?>(
-            stream: _controller.currentLocationStream,
-            builder: (context, snapshot) {
-              return ListTile(
-                leading: const Icon(Icons.maps_home_work_rounded),
-                title: !snapshot.hasData
-                    ? const LinearProgressIndicator()
-                    : Text(
-                        '${snapshot.data?.formattedAddress.toString()}',
-                      ),
-              );
-            },
-          ),
-          Hoxy.h8(),
-          OutlinedButton.icon(
-            style: OutlinedButton.styleFrom(
-              minimumSize: const Size(double.maxFinite, 56),
-              backgroundColor: Theme.of(context).primaryColor,
-            ),
-            onPressed: () => Navigator.of(context).pop(
-              _controller.currentLocation,
-            ),
-            icon: const Icon(
-              Icons.check_rounded,
-              color: Colors.white,
-            ),
-            label: const Text(
-              'Choose address',
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
-            ),
-          ).padHorizontal(24.0),
-        ],
-      ),
-    );
+    return Container();
   }
 
   AppBar _buildAppBar() {
