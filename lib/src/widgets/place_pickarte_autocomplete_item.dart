@@ -30,26 +30,29 @@ class PlacePickarteAutocompleteItem extends StatelessWidget {
     final List<TextSpan> result = [];
     const style = TextStyle(color: Colors.grey, fontSize: 15);
 
-    final startText = prediction.description!.substring(0, prediction.matchedSubstrings.first.offset.toInt());
+    final startText = prediction.description!
+        .substring(0, prediction.matchedSubstrings.first.offset.toInt());
     if (startText.isNotEmpty) {
       result.add(TextSpan(text: startText, style: style));
     }
 
     final boldText = prediction.description!.substring(
       prediction.matchedSubstrings.first.offset.toInt(),
-      prediction.matchedSubstrings.first.offset.toInt() + prediction.matchedSubstrings.first.length.toInt(),
+      prediction.matchedSubstrings.first.offset.toInt() +
+          prediction.matchedSubstrings.first.length.toInt(),
     );
     result.add(
       TextSpan(
         text: boldText,
         style: style.copyWith(
-          color: Theme.of(context).textTheme.bodyText1!.color,
+          color: Theme.of(context).textTheme.bodyLarge!.color,
         ),
       ),
     );
 
     final remainingText = prediction.description!.substring(
-      prediction.matchedSubstrings.first.offset.toInt() + prediction.matchedSubstrings.first.length.toInt(),
+      prediction.matchedSubstrings.first.offset.toInt() +
+          prediction.matchedSubstrings.first.length.toInt(),
     );
     result.add(
       TextSpan(
