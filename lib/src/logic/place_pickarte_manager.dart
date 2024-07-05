@@ -116,16 +116,16 @@ class PlacePickarteManager {
     }
   }
 
-  Future<void> _searchByLocation(Locationn location) async {
-    _updateCurrentLocation(null);
-    final result = await _googleMapsGeocoding.searchByLocation(location);
+  // Future<void> _searchByLocation(Locationn location) async {
+  //   _updateCurrentLocation(null);
+  //   final result = await _googleMapsGeocoding.searchByLocation(location);
 
-    if (result.errorMessage != null && result.errorMessage!.isNotEmpty) {
-      '📛 ${result.errorMessage!}'.logiosa();
-    } else {
-      _updateCurrentLocation(result.results.first);
-    }
-  }
+  //   if (result.errorMessage != null && result.errorMessage!.isNotEmpty) {
+  //     '📛 ${result.errorMessage!}'.logiosa();
+  //   } else {
+  //     _updateCurrentLocation(result.results.first);
+  //   }
+  // }
 
   Future<PlaceDetails> getPlaceDetails(String placeId) async {
     // use PlacesDetailsResponse with its error handling
