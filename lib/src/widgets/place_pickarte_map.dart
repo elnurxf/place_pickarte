@@ -14,44 +14,8 @@ class PlacePickarteMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        StreamBuilder<MapType>(
-          initialData: controller.config.googleMapType,
-          stream: controller.googleMapTypeStream,
-          builder: (context, snapshot) {
-            final googleMapType = snapshot.requireData;
-
-            return GoogleMap(
-              myLocationButtonEnabled: false,
-              myLocationEnabled: true,
-              mapType: googleMapType,
-              onMapCreated: controller.onGoogleMapCreated,
-              initialCameraPosition: controller.config.initialCameraPosition,
-              onCameraIdle: () {
-                'camera is now idle'.logiosa();
-
-                controller.manager.updatePinState(PinState.idle);
-              },
-              onCameraMove: (CameraPosition position) {
-                'camera is moving: $position'.logiosa();
-
-                controller.manager.updateCameraPosition(position);
-              },
-              onCameraMoveStarted: () {
-                'camera started moving'.logiosa();
-
-                controller.manager.updatePinState(PinState.dragging);
-              },
-            );
-          },
-        ),
-        PlacePickartePin(
-          pinBuilder: controller.config.pinBuilder,
-          pinStateStream: controller.pinStateStream,
-          // pinKey: controller.config.pinKey,
-        ),
-      ],
-    );
+    return GoogleMap(
+        initialCameraPosition:
+            CameraPosition(target: LatLng(40.409264, 49.867092)));
   }
 }
