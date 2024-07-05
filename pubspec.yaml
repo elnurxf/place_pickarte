@@ -1,6 +1,6 @@
 name: place_pickarte
 description: Sophisticated, artistic, pixel-by-pixel customizable map place picker for Flutter supporting Google Maps, Mapbox, OpenStreetMap and others.
-version: 0.2.1
+version: 0.2.2
 homepage: https://kamranbekirov.com
 repository: https://github.com/kamranbekirovyz/place-pickarte
 
