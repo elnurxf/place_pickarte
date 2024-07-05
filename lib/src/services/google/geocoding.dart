@@ -59,7 +59,7 @@ class GoogleMapsGeocoding extends GoogleWebService {
   }
 
   Future<GeocodingResponse> searchByLocation(
-    Location location, {
+    Locationn location, {
     String? language,
     List<String> resultType = const [],
     List<String> locationType = const [],
@@ -98,7 +98,7 @@ class GoogleMapsGeocoding extends GoogleWebService {
     List<String> resultType = const [],
     List<String> locationType = const [],
     String? placeId,
-    Location? location,
+    Locationn? location,
   }) {
     final params = <String, String>{};
 
@@ -145,7 +145,8 @@ class GoogleMapsGeocoding extends GoogleWebService {
     return url.replace(queryParameters: params).toString();
   }
 
-  GeocodingResponse _decode(Response res) => GeocodingResponse.fromJson(json.decode(res.body));
+  GeocodingResponse _decode(Response res) =>
+      GeocodingResponse.fromJson(json.decode(res.body));
 }
 
 @JsonSerializable()
@@ -162,7 +163,8 @@ class GeocodingResponse extends GoogleResponseStatus {
           errorMessage: errorMessage,
         );
 
-  factory GeocodingResponse.fromJson(Map<String, dynamic> json) => _$GeocodingResponseFromJson(json);
+  factory GeocodingResponse.fromJson(Map<String, dynamic> json) =>
+      _$GeocodingResponseFromJson(json);
   Map<String, dynamic> toJson() => _$GeocodingResponseToJson(this);
 }
 
@@ -196,9 +198,11 @@ class GeocodingResult {
     this.formattedAddress,
   });
 
-  PickedPlaceDetailed get details => PickedPlaceDetailed.fromGeocodingResult(this);
+  PickedPlaceDetailed get details =>
+      PickedPlaceDetailed.fromGeocodingResult(this);
 
-  factory GeocodingResult.fromJson(Map<String, dynamic> json) => _$GeocodingResultFromJson(json);
+  factory GeocodingResult.fromJson(Map<String, dynamic> json) =>
+      _$GeocodingResultFromJson(json);
   Map<String, dynamic> toJson() => _$GeocodingResultToJson(this);
 }
 
@@ -235,7 +239,8 @@ class PickedPlaceDetailed {
     this.streetNumber,
   });
 
-  factory PickedPlaceDetailed.fromGeocodingResult(GeocodingResult geocodingResult) {
+  factory PickedPlaceDetailed.fromGeocodingResult(
+      GeocodingResult geocodingResult) {
     // TODO: should this to be not removed?
     // if (!geocodingResult.types.contains('street_address')) {
     //   throw ArgumentError.value('street_address type not found in result');
@@ -257,13 +262,15 @@ class PickedPlaceDetailed {
       addressLine: geocodingResult.formattedAddress,
       countryName: country?.longName,
       countryCode: country?.shortName,
-      featureName: search('featureName')?.longName ?? geocodingResult.formattedAddress,
+      featureName:
+          search('featureName')?.longName ?? geocodingResult.formattedAddress,
       postalCode: search('postal_code')?.longName,
       adminArea: search('administrative_area_level_1')?.longName,
       subAdminArea: search('administrative_area_level_2')?.longName,
       locality: search('locality')?.longName,
       city: search('locality')?.longName,
-      subLocality: (search('sublocality') ?? search('sublocality_level_1'))?.longName,
+      subLocality:
+          (search('sublocality') ?? search('sublocality_level_1'))?.longName,
       thoroughfare: search('route')?.longName,
       streetName: search('route')?.longName,
       subThoroughfare: search('street_number')?.longName,

@@ -6,6 +6,8 @@ import 'package:place_pickarte/src/services/google/geocoding.dart';
 import 'package:place_pickarte/src/services/google/places.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:place_pickarte/place_pickarte.dart';
+import 'package:flutter/foundation.dart';
+import 'package:geocoding/geocoding.dart';
 
 class PlacePickarteManager {
   late final PlacePickarteConfig config;
@@ -23,18 +25,21 @@ class PlacePickarteManager {
     _googleMapsPlaces = GoogleMapsPlaces(
       apiKey: config.iosApiKey,
     );
-    _pinStateSubscription = _pinState.stream.listen((PinState event) {
+    _pinStateSubscription = _pinState.stream.listen((PinState event) async {
       /// null check before using value (CameraPosition subject is nullable).
       if (cameraPosition == null) return;
 
       /// Search only when the user released the control of the map.
       if (_pinState.value == PinState.idle) {
-        _searchByLocation(
-          Location(
-            lat: cameraPosition!.target.latitude,
-            lng: cameraPosition!.target.longitude,
-          ),
-        );
+        final place = await getPlacemarks(
+            cameraPosition!.target.latitude, cameraPosition!.target.longitude);
+        print("placceee:  $place");
+        // _searchByLocation(
+        //   Locationn(
+        //     lat: cameraPosition!.target.latitude,
+        //     lng: cameraPosition!.target.longitude,
+        //   ),
+        // );
       }
     });
 
@@ -59,7 +64,8 @@ class PlacePickarteManager {
   Stream<CameraPosition?> get cameraPositionStream => _cameraPosition.stream;
   Stream<String> get searchQueryStream => _searchQuery.stream;
   Stream<GeocodingResult?> get currentLocationStream => _currentLocation.stream;
-  Stream<List<Prediction>?> get autocompleteResultsStream => _autocompleteResults.stream;
+  Stream<List<Prediction>?> get autocompleteResultsStream =>
+      _autocompleteResults.stream;
   Stream<MapType> get googleMapTypeStream => _googleMapType.stream;
 
   CameraPosition? get cameraPosition => _cameraPosition.valueOrNull;
@@ -70,8 +76,10 @@ class PlacePickarteManager {
   void updatePinState(PinState event) => _pinState.add(event);
   void updateCameraPosition(CameraPosition event) => _cameraPosition.add(event);
   void searchAutocomplete(String event) => _searchQuery.add(event);
-  void _updateCurrentLocation(GeocodingResult? event) => _currentLocation.add(event);
-  void _updateAutocompleteResults(List<Prediction>? event) => _autocompleteResults.add(event);
+  void _updateCurrentLocation(GeocodingResult? event) =>
+      _currentLocation.add(event);
+  void _updateAutocompleteResults(List<Prediction>? event) =>
+      _autocompleteResults.add(event);
   void _updateGoogleMapType(MapType event) => _googleMapType.add(event);
 
   void close() {
@@ -108,7 +116,7 @@ class PlacePickarteManager {
     }
   }
 
-  Future<void> _searchByLocation(Location location) async {
+  Future<void> _searchByLocation(Locationn location) async {
     _updateCurrentLocation(null);
     final result = await _googleMapsGeocoding.searchByLocation(location);
 
@@ -121,7 +129,8 @@ class PlacePickarteManager {
 
   Future<PlaceDetails> getPlaceDetails(String placeId) async {
     // use PlacesDetailsResponse with its error handling
-    final detailsResponse = await _googleMapsPlaces.getDetailsByPlaceId(placeId);
+    final detailsResponse =
+        await _googleMapsPlaces.getDetailsByPlaceId(placeId);
     return detailsResponse.result;
   }
 
@@ -140,5 +149,44 @@ class PlacePickarteManager {
 
   void clearAutocompleteResults() {
     _updateAutocompleteResults(null);
+  }
+}
+
+Future<String> getPlacemarks(double lat, double long) async {
+  try {
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
+
+    var address = '';
+
+    if (placemarks.isNotEmpty) {
+      // Concatenate non-null components of the address
+      var streets = placemarks.reversed
+          .map((placemark) => placemark.street)
+          .where((street) => street != null);
+
+      // Filter out unwanted parts
+      streets = streets.where((street) =>
+          street!.toLowerCase() !=
+          placemarks.reversed.last.locality!
+              .toLowerCase()); // Remove city names
+      streets = streets
+          .where((street) => !street!.contains('+')); // Remove street codes
+
+      address += streets.join(', ');
+
+      address += ', ${placemarks.reversed.last.subLocality ?? ''}';
+      address += ', ${placemarks.reversed.last.locality ?? ''}';
+      address += ', ${placemarks.reversed.last.subAdministrativeArea ?? ''}';
+      address += ', ${placemarks.reversed.last.administrativeArea ?? ''}';
+      address += ', ${placemarks.reversed.last.postalCode ?? ''}';
+      address += ', ${placemarks.reversed.last.country ?? ''}';
+    }
+
+    print("Your Address for ($lat, $long) is: $address");
+
+    return address;
+  } catch (e) {
+    print("Error getting placemarks: $e");
+    return "No Address";
   }
 }

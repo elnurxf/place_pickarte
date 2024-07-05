@@ -3,16 +3,17 @@ import 'package:json_annotation/json_annotation.dart';
 part 'core.g.dart';
 
 @JsonSerializable()
-class Location {
+class Locationn {
   final double lat;
   final double lng;
 
-  Location({
+  Locationn({
     required this.lat,
     required this.lng,
   });
 
-  factory Location.fromJson(Map<String, dynamic> json) => _$LocationFromJson(json);
+  factory Locationn.fromJson(Map<String, dynamic> json) =>
+      _$LocationFromJson(json);
   Map<String, dynamic> toJson() => _$LocationToJson(this);
 
   @override
@@ -21,7 +22,7 @@ class Location {
 
 @JsonSerializable()
 class Geometry {
-  final Location location;
+  final Locationn location;
 
   /// JSON location_type
   final String? locationType;
@@ -37,14 +38,15 @@ class Geometry {
     this.bounds,
   });
 
-  factory Geometry.fromJson(Map<String, dynamic> json) => _$GeometryFromJson(json);
+  factory Geometry.fromJson(Map<String, dynamic> json) =>
+      _$GeometryFromJson(json);
   Map<String, dynamic> toJson() => _$GeometryToJson(this);
 }
 
 @JsonSerializable()
 class Bounds {
-  final Location northeast;
-  final Location southwest;
+  final Locationn northeast;
+  final Locationn southwest;
 
   Bounds({
     required this.northeast,
@@ -52,7 +54,8 @@ class Bounds {
   });
 
   @override
-  String toString() => '${northeast.lat},${northeast.lng}|${southwest.lat},${southwest.lng}';
+  String toString() =>
+      '${northeast.lat},${northeast.lng}|${southwest.lat},${southwest.lng}';
 
   factory Bounds.fromJson(Map<String, dynamic> json) => _$BoundsFromJson(json);
   Map<String, dynamic> toJson() => _$BoundsToJson(this);
@@ -124,7 +127,8 @@ class AddressComponent {
   static const country = 'country';
   static const streetNumber = 'street_number';
 
-  factory AddressComponent.fromJson(Map<String, dynamic> json) => _$AddressComponentFromJson(json);
+  factory AddressComponent.fromJson(Map<String, dynamic> json) =>
+      _$AddressComponentFromJson(json);
   Map<String, dynamic> toJson() => _$AddressComponentToJson(this);
 }
 

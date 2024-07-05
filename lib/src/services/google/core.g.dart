@@ -6,18 +6,18 @@ part of 'core.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Location _$LocationFromJson(Map<String, dynamic> json) => Location(
+Locationn _$LocationFromJson(Map<String, dynamic> json) => Locationn(
       lat: (json['lat'] as num).toDouble(),
       lng: (json['lng'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
+Map<String, dynamic> _$LocationToJson(Locationn instance) => <String, dynamic>{
       'lat': instance.lat,
       'lng': instance.lng,
     };
 
 Geometry _$GeometryFromJson(Map<String, dynamic> json) => Geometry(
-      location: Location.fromJson(json['location'] as Map<String, dynamic>),
+      location: Locationn.fromJson(json['location'] as Map<String, dynamic>),
       locationType: json['location_type'] as String?,
       viewport: json['viewport'] == null
           ? null
@@ -35,8 +35,8 @@ Map<String, dynamic> _$GeometryToJson(Geometry instance) => <String, dynamic>{
     };
 
 Bounds _$BoundsFromJson(Map<String, dynamic> json) => Bounds(
-      northeast: Location.fromJson(json['northeast'] as Map<String, dynamic>),
-      southwest: Location.fromJson(json['southwest'] as Map<String, dynamic>),
+      northeast: Locationn.fromJson(json['northeast'] as Map<String, dynamic>),
+      southwest: Locationn.fromJson(json['southwest'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$BoundsToJson(Bounds instance) => <String, dynamic>{

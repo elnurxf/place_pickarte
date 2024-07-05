@@ -3,8 +3,8 @@ import 'package:place_pickarte/src/services/google/core.dart';
 class PlacesAutocompleteConfig {
   final String? sessionToken;
   final num? offset;
-  final Location? origin;
-  final Location? location;
+  final Locationn? origin;
+  final Locationn? location;
   final num? radius;
   final String? language;
   final List<String> types;

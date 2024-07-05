@@ -16,8 +16,9 @@ dependencies:
   geolocator: ^12.0.0
   http: ^1.2.1
   json_annotation: ^4.9.0
+  geocoding: ^3.0.0
   #meta: ^1.15.0
-#edfdfsdsf
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
